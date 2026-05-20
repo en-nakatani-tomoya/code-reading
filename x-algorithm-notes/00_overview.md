@@ -6,6 +6,41 @@
 
 ---
 
+## 0. 30秒で掴む
+
+**For You フィードがやっていること = 「あなたが反応しそうな投稿を集めて、並べる」** これだけ。
+そのために 2つのソースから候補を集め、1つのMLモデルで全部スコアリングして、上から並べる。
+
+```mermaid
+flowchart LR
+    subgraph IN["① 候補を集める (Retrieve)"]
+      direction TB
+      A["フォロー中の投稿<br/>(in-network)"]
+      B["全世界の投稿から<br/>ML が掘り出す<br/>(out-of-network)"]
+    end
+
+    IN --> ML["② ランク付け (Rank)<br/><br/>Grok-based transformer が<br/>「いいね/返信/リポスト/通報…」<br/>19種類の確率を予測<br/>→ 重み付き和で1スコアに"]
+
+    ML --> OUT["③ 整える (Serve)<br/><br/>フィルタ → 上位K件 → 多様性調整<br/>→ あなたのフィードへ"]
+
+    style IN fill:#e8f4ff,stroke:#36a
+    style ML fill:#fff4e0,stroke:#c80
+    style OUT fill:#e8ffe8,stroke:#393
+```
+
+**この3ステップを実現するための役者:**
+
+| 段階 | 主な実装 | 言語 |
+|---|---|---|
+| ① 候補集め | `thunder/` (in-network), `phoenix/` retrieval (out-of-network) | Rust / Python |
+| ② ランク付け | `phoenix/` ranking (Grok transformer) | Python |
+| ③ 整える・オーケストレーション | `home-mixer/` | Rust |
+| 横串の基盤 | `candidate-pipeline/` (trait 群), `grox/` (コンテンツ理解) | Rust / Python |
+
+**設計の一行サマリ:** 手作業の特徴量を全部捨てて、ユーザーの行動履歴を transformer に食わせ、19種類のアクション確率を出させる。それを重み付き和で並べるだけ。
+
+---
+
 ## 1. ハイレベル・データフロー
 
 ユーザーが「For You」を開いてから、ランク済みフィードが返るまでの流れ。
