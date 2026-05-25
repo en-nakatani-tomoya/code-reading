@@ -235,6 +235,8 @@ flowchart LR
 
 - **オーケストレーションの流れ全体**を追う → [`01_orchestration_flow.md`](./01_orchestration_flow.md) (`home-mixer/` の二段パイプラインを関数呼び出しレベルで追う)
 - **設計上のキーポイント**を体系的に → [`02_design_keypoints.md`](./02_design_keypoints.md) (なぜそうなっているか / 何を捨てて何を取ったか)
+- **考察 (アーキテクチャから読み取れる暗黙の仮説)** → [`considerations/`](./considerations/)
+  - [`01_user_representation_hypothesis.md`](./considerations/01_user_representation_hypothesis.md) — `user_hashes` は何を encode しているか、なぜプロフィール特徴量がモデル入力にないのか
 - **パイプラインの抽象** → `candidate-pipeline/lib.rs` と各 trait ファイル
 - **ML 本体** → `phoenix/recsys_model.py`（ランキング）, `phoenix/recsys_retrieval_model.py`（2-tower）
 - **動かす** → `phoenix/run_pipeline.py` + `phoenix/artifacts/` の mini モデル

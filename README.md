@@ -7,16 +7,16 @@ OSS のコードリーディング・ノート集。
 ```
 .
 ├── external_repo/        # クローン済み外部リポジトリ (gitignored)
-└── <repo>-notes/         # 各リポジトリのリーディングノート (Mermaid 図付き)
+└── <repo-name>/          # 対応するリーディングノート
 ```
 
-外部リポジトリ本体は `.gitignore` で除外しているため、各 `*-notes/` の手順に従ってローカルでクローンしてください。
+外部リポジトリ本体は `.gitignore` で除外しているため、対応するノートディレクトリの手順に従ってローカルでクローンしてください。
 
 ## 現在のノート
 
-### x-algorithm-notes/
+### x-algorithm/
 
-[xai-org/x-algorithm](https://github.com/xai-org/x-algorithm) — X (旧 Twitter) の "For You" フィードのレコメンドアルゴリズム (2026-01 公開, 2026-05-15 アップデート)。
+[xai-org/x-algorithm](https://github.com/xai-org/x-algorithm) — X (旧 Twitter) の "For You" フィードのレコメンドアルゴリズム。
 
 セットアップ:
 
